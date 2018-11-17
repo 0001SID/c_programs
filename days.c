@@ -1,6 +1,5 @@
 //Finding the number of days of a given month
 #include<stdio.h>
-#include<conio.h>
 int main()
 {
     char month[100];
