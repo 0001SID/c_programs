@@ -12,6 +12,14 @@
             "label": "cmpl",
             "type": "shell",
             "command": "gcc ${file} -o a.out"
+        },
+        {
+            "label": "Rum",
+            "type": "shell",
+            "command": "tcc -run ${file}",
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }
