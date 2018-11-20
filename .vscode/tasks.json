@@ -14,7 +14,7 @@
             "command": "gcc ${file} -o a.out"
         },
         {
-            "label": "Rum",
+            "label": "Run",
             "type": "shell",
             "command": "tcc -run ${file}",
             "problemMatcher": [
