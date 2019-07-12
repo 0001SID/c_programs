@@ -1,5 +1,8 @@
 #include <stdio.h>
-main()
+int main()
 {
-    printf("hello world");
+	char name[10];
+	scanf("%s",&name);
+    printf("%s",name);
+    return 0;
 }

@@ -3,14 +3,32 @@
 #include <string.h>
 void operation(int operator)
 {
+    //Getting the value of row and coloumn
+
+
     int row[2], coloumn[2];
-    for (int i = 0; i < 2; i++)
+    if(operator != 4)
     {
-        printf("Enter the number of row of matrix %d\n", i + 1);
-        scanf("%d", &row[i]);
-        printf("Enter the number of coloumn of matrix %d\n", i + 1);
-        scanf("%d", &coloumn[i]);
+        for (int i = 0; i < 2; i++)
+        {
+            printf("Enter the number of row of matrix %d\n", i + 1);
+            scanf("%d", &row[i]);
+            printf("Enter the number of coloumn of matrix %d\n", i + 1);
+            scanf("%d", &coloumn[i]);
+        }
     }
+    else
+    {
+        printf("Enter the number of row of matrix \n");
+        scanf("%d", &row[0]);
+        printf("Enter the number of coloumn of matrix \n");
+        scanf("%d", &coloumn[0]);
+    }
+
+    //------------------------------------------------------------------
+
+    //Checking the sollution possibility
+
     if (operator== 1 || operator== 2)
     {
         if (coloumn[0] != coloumn[1] && row[0] != row[1])
@@ -26,7 +44,7 @@ void operation(int operator)
             exit(0);
         }
     }
-    else
+    else if (operator == 3)
     {
         if (coloumn[0] != row[1])
         {
@@ -34,32 +52,63 @@ void operation(int operator)
             exit(0);
         }
     }
+
+    //-------------------------------------------------------------------------
+
+    //Taking data of  the matrix
+
+
     float a[row[0]][coloumn[0]], b[row[0]][coloumn[1]], result[row[0]][coloumn[1]],temp;
-    printf("\nTaking data for matrix 1 (A)\n\n");
-    for (int i = 0; i < row[0]; i++)
+
+    if(operator != 4)
     {
-        for (int j = 0; j < coloumn[0]; j++)
+        printf("\nTaking data for matrix 1 (A)\n\n");
+        for (int i = 0; i < row[0]; i++)
         {
-            printf("Enter the value of A%d%d element : ", i + 1, j + 1);
-            scanf("%f", &a[i][j]);
+            for (int j = 0; j < coloumn[0]; j++)
+            {
+                // printf("Enter the value of A%d%d element : ", i + 1, j + 1);
+                scanf("%f", &a[i][j]);
+            }
+        }
+        printf("\nTaking data for matrix 2 (B)\n\n");
+        for (int i = 0; i < row[1]; i++)
+        {
+            for (int j = 0; j < coloumn[1]; j++)
+            {
+                // printf("Enter the value of B%d%d element : ", i + 1, j + 1);
+                scanf("%f", &b[i][j]);
+            }
         }
     }
-    printf("\nTaking data for matrix 2 (B)\n\n");
-    for (int i = 0; i < row[1]; i++)
+    else
     {
-        for (int j = 0; j < coloumn[1]; j++)
+        printf("\nTaking data for matrix\n\n");
+        for (int i = 0; i < row[0]; i++)
         {
-            printf("Enter the value of B%d%d element : ", i + 1, j + 1);
-            scanf("%f", &b[i][j]);
+            for (int j = 0; j < coloumn[0]; j++)
+            {
+                // printf("Enter the value of A%d%d element : ", i + 1, j + 1);
+                scanf("%f", &a[i][j]);
+            }
         }
     }
+
+    //-----------------------------------------------------------------------------------
+
+    //Showing the result of calculation
+
     if (operator== 1)
         printf("The resultant summation is :\n\n");
     else if (operator == 2)
         printf("The resultant subtraction is :\n\n");
+    else if(operator == 3)
+    {
+        printf("The transpose of the matrix is:\n\n");
+    }
     else
         printf("The resultant multiplication is :\n\n");
-    if (operator== 2 || operator== 1)
+    if (operator== 2 || operator== 1|| operator == 4)
     {
         for (int i = 0; i < row[0]; i++)
         {
@@ -70,16 +119,20 @@ void operation(int operator)
                     result[i][j] = a[i][j] + b[i][j];
                     printf("%.2f\t", result[i][j]);
                 }
-                else
+                else if (operator == 2)
                 {
                     result[i][j] = a[i][j] - b[i][j];
                     printf("%.2f\t", result[i][j]);
+                }
+                else if(operator == 4)
+                {
+                    printf("%.2f\t",a[j][i]);
                 }
             }
             printf("\n\n");
         }
     }
-    else
+    else if(operator == 3)
     {
         for (int i = 0; i < row[0]; i++)
         {
@@ -96,7 +149,13 @@ void operation(int operator)
             printf("\n\n");
         }
     }
+    else
+    {
+        printf("(Invalid input)\n");
+    }
 }
+
+//-------------------------------------------------------------------------------------------------------
 
 int main()
 {
@@ -104,7 +163,7 @@ int main()
     while (1)
     {
         printf("\n\nWhat you want to do\n");
-        printf("1.Summation\n2.Subtraction\n3.Multiplication\n");
+        printf("1.Summation\n2.Subtraction\n3.Multiplication\n4.Tranpose\n");
         printf("\nEnter your choice : ");
         int res;
         scanf("%d", &res);
@@ -119,6 +178,10 @@ int main()
         else if (res == 3)
         {
             operation(3);
+        }
+        else if (res == 4)
+        {
+            operation(4);
         }
         else
         {
