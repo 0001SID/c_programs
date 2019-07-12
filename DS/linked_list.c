@@ -112,6 +112,8 @@ int main()
 	struct node *A;
 	A = NULL;
 
+	printf("\n\n\t\tA PROGRAM OF SIMPLE LINKED LIST DATA STRUCTURE\n");
+
 	do{
 		printf("\n1. Insert\n2. Insert at specific position\n3. Delete\n4. Update\n5. view\n\nYour Response: ");
 		scanf("%d",&what);
@@ -125,7 +127,7 @@ int main()
 		if (what == 1)
 		{
 			printf("You have %d records\n",elements );
-			printf("Enter the data\n");
+			printf("Enter the value: ");
 			scanf("%d",&data);
 			fflush(stdin);
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
