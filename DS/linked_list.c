@@ -153,16 +153,9 @@ int main()
 				struct node *temp = (struct node*)malloc(sizeof(struct node));
 				
 				if(pos == 1){
-					// if(elements>0){
-						temp->next = A;
-						temp->data = data;
-						A = temp;
-					// }
-					// else{
-					// 	temp->next = NULL;
-					// 	temp->data = data;
-					// 	A = temp;
-					// }
+					temp->next = A;
+					temp->data = data;
+					A = temp;
 				}else{
 					insert_sp(A,temp,data,pos,elements);
 				}
