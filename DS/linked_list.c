@@ -1,34 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 struct node
 {
 	int data;
 	struct node *next;
 };
+struct node* head = NULL;
 
-void insert(struct node *temp,int data){
-	
+struct node* current = NULL;
+
+
+void insert(struct node *a,int data){
+	current = a;
+	struct node* temp = (struct node*)malloc(sizeof(struct node));
+	if(head != NULL){
+		while(current->next != NULL){
+			current = current->next;
+		}
+		
+		current->next = temp;
+	}
+	else{
+		head = temp;
+	}
 	temp->next = NULL;
 	temp->data = data;
 
 }
 
-void insert_sp(struct node *a,struct node *temp,int data,int index,int elements){
+void reverse(struct node* a){
+	struct node* next = NULL;
+	struct node* pre = NULL;
+	current = a;
+	while(current != NULL){
+		next = current->next;
+		current->next = pre;
+		pre = current;
+		current = next;
+	}
+	head = pre;
+}
+
+void view(struct node *a){
+	current = a;
+	while(current != NULL){
+		printf("%d ",current->data);
+		current = current->next;
+	}
+}
+
+void insert_sp(struct node *a,int data,int index,int elements){
+
+	current = a;
 	int count = 1;
-	while(a->next != NULL){
-		if(index == count+1){
-			temp->next = a->next;
-			temp->data = data;
-			a->next = temp;
-			break;
-			
+	struct node* temp = (struct node*)malloc(sizeof(struct node));
+	if(index == 1){
+		temp->next = head;
+		temp->data = data;
+		head = temp;
+	}
+	else{
+		if(head != NULL){
+			while(current->next != NULL){
+				if(index == count+1){
+					temp->next = current->next;
+					temp->data = data;
+					current->next = temp;
+					break;
+					
+				}
+				current = current->next;
+				count++;
+			}
 		}
-		a = a->next;
-		count++;
 	}
 	if(index > elements){
-		a->next = temp;
+		current->next = temp;
 		temp->next = NULL;
 		temp->data = data;
 	}
@@ -51,47 +98,37 @@ void update(struct node *a,int index,int data,int elements){
 
 void delete(struct node *a,int index,int elements){
 	int count = 1;
-	while(a->next != NULL){
-		if(index == count+1){
-			if(elements == count+1){
-				a->next = NULL;
-				break;
-			}
-			else{
-				a->next = a->next->next;
-				break;
-			}
-			// free(a);
-			
+	if(index == 1){
+		if(elements>1){
+			head = head->next;
 		}
-		a = a->next;
-		count++;
-	}	
-}
-
-// void delete_last(struct node *a){
-// 	while(a->next != NULL){
-// 		printf("%d  ",a->data);
-// 		a = a->next;
-// 	}
-// 	free(a);
-// }
-
-
-void save_address(struct node *a,struct node *temp){
-	while(a->next != NULL){
-		a = a->next;
+		else{
+			head = NULL;
+		}
 	}
-	a->next = temp;
+	else{
+		while(a->next != NULL){
+			if(index == count+1){
+				if(elements == count+1){
+					a->next = NULL;
+					break;
+				}
+				else{
+					a->next = a->next->next;
+					break;
+				}
+				// free(a);
+				
+			}
+			a = a->next;
+			count++;
+		}	
+	}
 }
 
-void view(struct node *a){
-	while(a->next != NULL){
-		printf("%d  ",a->data);
-		a = a->next;
-	}
-	printf("%d  ",a->data);
-}
+
+
+
 int check_element(struct node *a){
 	int count = 0;
 	if(a == NULL){
@@ -107,17 +144,15 @@ int check_element(struct node *a){
 }
 int main()
 {
-	int what,elements,data,pos;
+	int what,elements,data,pos,total;
 	char res;
-	struct node *A;
-	A = NULL;
 
 	printf("\n\n\t\tA PROGRAM OF SIMPLE LINKED LIST DATA STRUCTURE\n");
 
 	do{
-		printf("\n1. Insert\n2. Insert at specific position\n3. Delete\n4. Update\n5. view\n\nYour Response: ");
+		printf("\n1. Insert\n2. Insert at specific position\n3. Delete\n4. Update\n5. view\n6. Reverse Record\n\nYour Response: ");
 		scanf("%d",&what);
-		elements = check_element(A);
+		elements = check_element(head);
 		fflush(stdin);
 		if(elements == 0 && what == 2){
 			what = 1;
@@ -126,48 +161,48 @@ int main()
 
 		if (what == 1)
 		{
-			printf("You have %d records\n",elements );
-			printf("Enter the value: ");
-			scanf("%d",&data);
-			fflush(stdin);
-			struct node *temp = (struct node*)malloc(sizeof(struct node));
-			if(elements == 0){
-				A = temp;
-			}else{
-				save_address(A,temp);
+			printf("\nHow many numbers you want to add: ");
+			scanf("%d",&total);
+			for(int i = 0; i<total; i++){
+
+				elements = check_element(head);
+
+				printf("\nYou have %d records",elements );
+				printf("\nEnter the value: ");
+				scanf("%d",&data);
+				fflush(stdin);
+				insert(head,data);
+				printf("\nUpdated Record:\n");
+				view(head);
 			}
-			insert(temp,data);
-			printf("\nUpdated Record:\n");
-			view(A);
 		}
 
 
 		else if(what == 2){
-			printf("You have %d records\n",elements );
-			printf("Enter the position: ");
-			scanf("%d",&pos);
-			fflush(stdin);
-			
-			if(pos>0){
-				printf("Enter the value: ");
-				scanf("%d",&data);
+			printf("\nHow many numbers you want to add: ");
+			scanf("%d",&total);
+			for(int i = 0; i<total; i++){
+
+				elements = check_element(head);
+
+				printf("\nYou have %d records\n",elements );
+				printf("\nEnter the position: ");
+				scanf("%d",&pos);
 				fflush(stdin);
-				struct node *temp = (struct node*)malloc(sizeof(struct node));
 				
-				if(pos == 1){
-					temp->next = A;
-					temp->data = data;
-					A = temp;
-				}else{
-					insert_sp(A,temp,data,pos,elements);
+				if(pos>0){
+					printf("\nEnter the value: ");
+					scanf("%d",&data);
+					fflush(stdin);
+					insert_sp(head,data,pos,elements);
+					if(elements != 0){
+						printf("\nUpdated Record:\n");
+						view(head);
+					}
 				}
-				if(elements != 0){
-					printf("\nUpdated Record:\n");
-					view(A);
+				else{
+					printf("\nNo record on this position");
 				}
-			}
-			else{
-				printf("No record on this position\n");
 			}
 
 		}
@@ -175,64 +210,76 @@ int main()
 
 		else if (what == 3)
 		{
-			printf("Enter the position: ");
-			scanf("%d",&pos);
-			fflush(stdin);
-			
-			if(pos<=elements && pos>0){
-				if(pos == 1){
-					if(elements>1){
-						A = A->next;
+			printf("\nHow many numbers you want to delete: ");
+			scanf("%d",&total);
+			for(int i = 0; i<total; i++){
+
+				elements = check_element(head);
+
+				printf("\nEnter the position: ");
+				scanf("%d",&pos);
+				fflush(stdin);
+				
+				if(pos<=elements && pos>0){
+					delete(head,pos,elements);
+					if(elements-1 != 0){
+						printf("\nUpdated Record:\n");
+						view(head);
 					}
-					else{
-						A = NULL;
-					}
-				}else{
-					delete(A,pos,elements);
 				}
-				if(elements-1 != 0){
-					printf("\nUpdated Record:\n");
-					view(A);
+				else{
+					printf("\nNo record on this position");
 				}
-			}
-			else{
-				printf("No record on this position\n");
 			}
 		}
 
 
 		else if (what == 4)
 		{
-			int pos;
-			printf("Enter the position: ");
-			scanf("%d",&pos);
-			fflush(stdin);
-			
-			
-			if(pos<=elements && pos>0){
-				printf("Enter the value: ");
-				scanf("%d",&data);
+			printf("\nHow many numbers you want to update: ");
+			scanf("%d",&total);
+			for(int i = 0; i<total; i++){
+
+				elements = check_element(head);
+
+				int pos;
+				printf("\nEnter the position: ");
+				scanf("%d",&pos);
 				fflush(stdin);
-				update(A,pos,data,elements);
+				
+				
+				if(pos<=elements && pos>0){
+					printf("\nEnter the value: ");
+					scanf("%d",&data);
+					fflush(stdin);
+					update(head,pos,data,elements);
 
-				printf("\nUpdated Record:\n");
-				view(A);
+					printf("\nUpdated Record:\n");
+					view(head);
 
+				}
+				else{
+					printf("\nNo record on this position");
+				}
 			}
-			else{
-				printf("No record on this position\n");
-			}
-			// printf("test 3\n");
 		}
 
 
 		else if (what == 5)
 		{
 			if(elements!= 0){
-				view(A);
+				view(head);
 			}
 			else{
-				printf("No record found\n");
+				printf("\nNo record found\n");
+			}
+		}
+		else if (what == 6)
+		{
+			if(elements != 0){
+				reverse(head);
+				printf("\nUpdated Record:\n");
+				view(head);
 			}
 		}
 		printf("\n\nWant to do some more function? (y/n): ");
