@@ -4,7 +4,7 @@ void del(int *,int*),view(int*,int),reverse(int*,int);
 int* insert(int*,int*);
 int* insert_sp(int*,int*);
 int main(){
-	int what,data,n = 0,pos,total;
+	int what,n = 0;
 	char res;
 	int *a = (int *)malloc(sizeof(int));
 
