@@ -55,7 +55,7 @@ bool check_parenthesis(char *exp){
 	stack<int> S;
 	for(int i = 0; i< strlen(exp); i++){
 		if(check_open(exp[i])){
-			S.push(check_open(exp[i]));
+			S.push(exp[i]);
 		}
 		if(check_close(exp[i])){
 			if(S.empty()){
@@ -63,7 +63,7 @@ bool check_parenthesis(char *exp){
 				break;
 			}
 			else{
-				if(check_close(exp[i]) == S.top()){
+				if(check_close(exp[i]) == check_open(S.top())){
 					S.pop();
 				}
 				else{
