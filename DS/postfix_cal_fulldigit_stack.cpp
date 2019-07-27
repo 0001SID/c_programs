@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <math.h>
+
 using namespace std;
 
 bool isValid(char*),check_parenthesis(char*),isOperator(char);
@@ -36,6 +37,7 @@ int main(){
 							if(isdigit(postfix_exp[i]) || isOperator(postfix_exp[i]) || postfix_exp[i] == 'd'){
 								if(postfix_exp[i] == 'd'){
 									cout<<advance_digit[i];i++;
+									cout<<",";
 								}
 								else{
 									cout<<postfix_exp[i];i++;
@@ -261,11 +263,6 @@ int calculate(char *exp , int *digit){
 	stack<int> S;
 	int op1,op2,i = 0;
 	while(exp[i]){
-		// cout<<"t"<<exp[i]<<endl;
-		// if(isdigit(exp[i])){
-		// 	S.push((int)(exp[i]-'0'));
-		// 	// cout<<"top"<<S.top()<<endl;
-		// }
 		if(exp[i] == 'd'){
 			S.push(digit[i]);
 		}
@@ -308,9 +305,9 @@ char* createAdvanceExp(char *exp, int *digit){
 			}
 			i--;
 			for(int k = 0 ; k<j;k++){	//creating integer value from the array of characters
-				cout<<"val "<<val<<" add "<<toInt(exp[i-k])*pow(10,k)<<endl;
+//				cout<<"val "<<val<<" add "<<toInt(exp[i-k])*pow(10,k)<<endl;
 				val += toInt(exp[i-k])*pow(10,k);
-				cout<<"res "<<val<<endl;
+//				cout<<"res "<<val<<endl;
 			}
 			j = 0;
 			new_exp[loc] = 'd';

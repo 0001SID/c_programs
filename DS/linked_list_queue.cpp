@@ -20,11 +20,7 @@ class queue{
 		bool dequeue();
 		int frontVal();
 		bool isEmpty();
-		node* createNode(){
-			temp = new node;
-			temp->next = NULL;
-
-		}
+		node* createNode();
 };
 
 int main(){
@@ -106,8 +102,8 @@ bool queue :: isEmpty(){
 	}
 }
 
-// queue::node* queue :: *createNode(){
-// 	struct node* temp = new queue::node;
-// 	temp->next = NULL;
-// 	return temp;
-// }
+queue::node* queue :: createNode(){
+	struct node* temp = new queue::node;
+	temp->next = NULL;
+	return temp;
+}
