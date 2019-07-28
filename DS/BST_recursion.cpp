@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <queue>
 using namespace std;
 
 class bst{
@@ -23,6 +24,10 @@ public:
 	int findMin(),mainFindMin(node*);
 	int findMax(),mainFindMax(node*);
 	int findHeight(),mainFindHeight(node*);
+	void levelOrderTraversal();
+	void preorder(),mainPreorder(node*);
+	void postorder(),mainPostorder(node*);
+	void inorder(),mainInorder(node*);
 
 };
 int main(){
@@ -33,8 +38,8 @@ int main(){
 	printf("\n\n\t\tA PROGRAM OF BINARY SEARCH TREE\n");
 
 	do{
-		printf("\n1. Insert\n2. Search\n3. Find Min\n4. Find Max\n5. Find Height\n\nYour Response: ");
-		scanf("%d",&what);
+		cout<<"\n1. Insert\n2. Search\n3. Find Min\n4. Find Max\n5. Find Height\n6. Level Order Traversal\n7. Pre Order Traversal\n8. In Order Traversal\n9. Post Order Traversal\n\nYour Response: ";
+		cin>>what;
 		if(what == 1){
 			cout<<"How many number you want to insert: ";
 			cin>>n;
@@ -62,6 +67,18 @@ int main(){
 		}
 		else if(what == 5){
 			cout<<"Height of the tree is: "<<Tree.findHeight();
+		}
+		else if(what == 6){
+			Tree.levelOrderTraversal();
+		}
+		else if(what == 7){
+			Tree.preorder();
+		}
+		else if(what == 8){
+			Tree.postorder();
+		}
+		else if(what == 9){
+			Tree.inorder();
 		}
 		else{
 			cout<<"Invalid Response";
@@ -153,4 +170,61 @@ int bst::mainFindHeight(node* root){
 	else{
 		return max(mainFindHeight(root->left),mainFindHeight(root->right)) + 1;
 	}
+}
+
+void bst::levelOrderTraversal(){
+	node* root = mainRoot;
+	queue<node*> Q;
+	if(root != NULL){
+		Q.push(root);
+		do{
+			root = Q.front();
+			if(root->left != NULL){
+				Q.push(root->left);
+			}
+			if(root->right != NULL){
+				Q.push(root->right);
+			}
+			cout<<Q.front()->data<<" ";
+			Q.pop();
+
+		}while(!Q.empty());
+	}
+	else{
+		cout<<"Empty Tree"<<endl;
+		return;
+	}
+}
+
+void bst::preorder(){
+	mainPreorder(mainRoot);
+}
+
+void bst::mainPreorder(node* root){
+	if(root == NULL) return ;
+	cout<<root->data<<" ";
+	mainPreorder(root->left);
+	mainPreorder(root->right);
+}
+
+void bst::postorder(){
+	mainPostorder(mainRoot);
+}
+
+void bst::mainPostorder(node* root){
+	if(root == NULL) return ;
+	mainPostorder(root->left);
+	mainPostorder(root->right);
+	cout<<root->data<<" ";
+}
+
+void bst::inorder(){
+	mainInorder(mainRoot);
+}
+
+void bst::mainInorder(node* root){
+	if(root == NULL) return ;
+	mainInorder(root->left);
+	cout<<root->data<<" ";
+	mainInorder(root->right);
 }
