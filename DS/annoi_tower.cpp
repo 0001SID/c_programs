@@ -3,28 +3,43 @@
 #include <stdlib.h>
 using namespace std;
 int step = 1;
-void showStep(int disk,int barPosition){
-    cout<<"Step "<<step<<": Disk "<<disk+1<<" goes to bar "<<barPosition + 1<<endl;
+void showStep(int disk, int barPosition)
+{
+    cout << "Step " << step << ": Disk " << disk + 1 << " goes to bar " << barPosition + 1 << endl;
     step++;
 }
 
 int main()
 {
     int bar, position;
-    cout << "Enter the number of bars: ";
-    cin >> bar;
-    cout << "Enter the position of the bar where you want to place: ";
-    cin >> position;
+    do
+    {
+        cout << "Enter the number of bars: ";
+        cin >> bar;
+        if (bar < 1)
+        {
+            cout << "Invalid input\n";
+        }
+    } while (bar < 1);
+    do
+    {
+        cout << "Enter the position of the bar where you want to place: ";
+        cin >> position;
+        if (position < 1 || position > bar)
+        {
+            cout << "Invalid input\n";
+        }
+    } while (position < 1 || position > bar);
     position = position - 1;
     stack<int> S[bar];
-    for (int i = bar-1; i >= 0; i--)
+    for (int i = bar - 1; i >= 0; i--)
     {
         S[0].push(i);
     }
     //Start shuffling
     //The first disk will goes to the bar where we want to get the disks at the end
     S[0].pop();
-    showStep(0,position);
+    showStep(0, position);
     for (int i = 1; i < bar; i++)
     {
         if (i == position)
@@ -33,7 +48,7 @@ int main()
             continue;
         }
         S[i].push(S[0].top());
-        showStep(S[0].top(),i);
+        showStep(S[0].top(), i);
         S[0].pop();
     }
 
@@ -42,16 +57,15 @@ int main()
     {
         if (S[i].top() == 1)
         {
-            
+
             S[position].pop();
             S[i].push(0);
-            showStep(0,i);
+            showStep(0, i);
             S[position].push(S[0].top());
-            showStep(S[0].top(),position);
+            showStep(S[0].top(), position);
             S[0].pop();
         }
     }
-
 
     while (true)
     {
@@ -63,7 +77,7 @@ int main()
         }
         else
         {
-            rDisk = S[position].top() - 1;  //next small disk after the last placed disk
+            rDisk = S[position].top() - 1; //next small disk after the last placed disk
         }
 
         //find the next small disk and place it above the last disk
@@ -74,7 +88,7 @@ int main()
                 if (S[i].top() == rDisk)
                 {
                     S[position].push(S[i].top());
-                    showStep(S[i].top(),position);
+                    showStep(S[i].top(), position);
                     S[i].pop();
                     isFound = true;
                     break;
@@ -82,11 +96,11 @@ int main()
             }
         }
         //if there is no immidiate small disk then find the next small disk and place it in a empty bar
-        if (!isFound)  //
+        if (!isFound) //
         {
             rDisk--;
             int nextValPos = 0;
-            for (int j = 0; j < bar; j++)  //Loop for finding the next small disk after immidiate small disk
+            for (int j = 0; j < bar; j++) //Loop for finding the next small disk after immidiate small disk
             {
                 if (!S[j].empty())
                 {
@@ -96,12 +110,12 @@ int main()
                     }
                 }
             }
-            for (int j = 0; j < bar; j++)  //loop for finding a empty bar and place the founded disk from the above loop
+            for (int j = 0; j < bar; j++) //loop for finding a empty bar and place the founded disk from the above loop
             {
                 if (S[j].empty())
                 {
                     S[j].push(S[nextValPos].top());
-                    showStep(S[nextValPos].top(),j);
+                    showStep(S[nextValPos].top(), j);
                     S[nextValPos].pop();
                     break;
                 }
