@@ -29,8 +29,6 @@ public:
 	void inorder(),mainInorder(node*);
 	void del(int);
 	node* mainDelete(node*,int);
-
-
 };
 int main(){
 	int what,n,val;

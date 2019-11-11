@@ -30,6 +30,8 @@ public:
 	void inorder(),mainInorder(node*);
 	void del(int);
 	node* mainDelete(node*,int);
+	int findSuccessor(int);
+	node* findAddressOf(node*,int);
 
 };
 int main(){
@@ -40,7 +42,7 @@ int main(){
 	printf("\n\n\t\tA PROGRAM OF BINARY SEARCH TREE\n");
 
 	do{
-		cout<<"\n1. Insert\n2. Search\n3. Find Min\n4. Find Max\n5. Find Height\n6. Level Order Traversal\n7. Pre Order Traversal\n8. In Order Traversal\n9. Post Order Traversal\n10. Delete\n\nYour Response: ";
+		cout<<"\n1. Insert\n2. Search\n3. Find Min\n4. Find Max\n5. Find Height\n6. Level Order Traversal\n7. Pre Order Traversal\n8. In Order Traversal\n9. Post Order Traversal\n10. Delete\n11. Find Successor\n\nYour Response: ";
 		cin>>what;
 		switch(what){
 			case 1:
@@ -89,6 +91,11 @@ int main(){
 				cout<<"Enter the number you want to delete: ";
 				cin>>val;
 				Tree.del(val);
+				break;
+			case 11:
+				cout<<"Find the successor of: ";
+				cin>>val;
+				cout<<"Successor of "<<val<<" is : "<<Tree.findSuccessor(val);
 				break;
 			default:
 				cout<<"Invalid Response";
@@ -267,5 +274,52 @@ bst::node* bst::mainDelete(node* root,int val){
 			root->left = mainDelete(root->left,root->data);
 		}
 		return root;
+	}
+}
+
+bst::node* bst::findAddressOf(node* root,int val){
+	if(root != NULL){
+		if(root->data == val){
+			return root;
+		}
+		else if(val<=root->data){
+			findAddressOf(root->left,val);
+		}
+		else{
+			findAddressOf(root->right,val);
+		}
+	}
+	else{
+		return NULL;
+	}
+}
+
+int bst::findSuccessor(int val){
+	node* current;
+	node* anchester;
+	anchester = mainRoot;
+	node* successor;
+	successor = NULL;
+	current = findAddressOf(mainRoot,val);
+	if(current == NULL) return 0;
+	else if(current->right != NULL){
+		return mainFindMin(current->right);
+	}
+	else{
+		while (current != anchester){
+			if(current->data < anchester->data){
+				successor = anchester;
+				anchester = anchester->left;
+			}
+			else{
+				anchester = anchester->right;
+			}
+		}
+		if(successor != NULL){
+			return successor->data;		
+		}
+		else{
+			return 0;
+		}
 	}
 }
